@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Command.Commands
+namespace Command.Commands.AbstractCommands
 {
     public abstract class UnitCommand : ICommand
     {
