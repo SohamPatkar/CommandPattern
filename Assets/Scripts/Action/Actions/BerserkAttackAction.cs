@@ -17,7 +17,7 @@ namespace Command.Actions
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
 
-            actorUnit.PlayBattleAnimation(ActionType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
@@ -32,8 +32,6 @@ namespace Command.Actions
                 Debug.Log("actor unit must be hit now.");
             }
         }
-
-        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }

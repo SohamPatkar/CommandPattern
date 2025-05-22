@@ -11,31 +11,29 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
 
-            actorUnit.PlayBattleAnimation(ActionType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.Attack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
-        public void OnActionAnimationCompleted() 
+        public void OnActionAnimationCompleted()
         {
             PlayAttackSound();
 
-            if (IsSuccessful())
-                targetUnit.TakeDamage(actorUnit.CurrentPower);
-            else
-                GameService.Instance.UIService.ActionMissed();
+            // if (IsSuccessful())
+            //     targetUnit.TakeDamage(actorUnit.CurrentPower);
+            // else
+            //     GameService.Instance.UIService.ActionMissed();
         }
-
-        public bool IsSuccessful() => true;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
 
         private void PlayAttackSound()
         {
-            switch(actorUnit.UnitType)
+            switch (actorUnit.UnitType)
             {
                 case UnitType.WIZARD:
                     GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MAGIC_BALL);

@@ -7,10 +7,7 @@ namespace Command.Commands.AbstractCommands
 {
     public abstract class UnitCommand : ICommand
     {
-        public int ActorUnitID;
-        public int TargetUnitID;
-        public int ActorPlayerID;
-        public int TargetPlayerID;
+        public CommandData CommandData;
 
         protected UnitController actorUnit;
         protected UnitController targetUnit;
@@ -19,6 +16,9 @@ namespace Command.Commands.AbstractCommands
 
         public abstract bool WillHitTarget();
 
+        public void SetActorUnitID(UnitController actorUnit) => this.actorUnit = actorUnit;
+
+        public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
     }
 }
 
