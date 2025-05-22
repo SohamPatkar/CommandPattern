@@ -11,7 +11,7 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Friendly;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
@@ -23,8 +23,8 @@ namespace Command.Actions
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.HEAL);
 
-            if (IsSuccessful())
-                targetUnit.RestoreHealth(actorUnit.CurrentPower);
+            // if (IsSuccessful())
+            //     targetUnit.RestoreHealth(actorUnit.CurrentPower);
         }
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();

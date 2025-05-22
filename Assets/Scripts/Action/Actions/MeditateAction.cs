@@ -11,7 +11,7 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Self;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
@@ -23,14 +23,14 @@ namespace Command.Actions
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MEDITATE);
 
-            if (IsSuccessful())
-            {
-                var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);
-                targetUnit.CurrentMaxHealth += healthToIncrease;
-                targetUnit.RestoreHealth(healthToIncrease);
-            }
-            else
-                GameService.Instance.UIService.ActionMissed();
+            // if (IsSuccessful())
+            // {
+            //     var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);
+            //     targetUnit.CurrentMaxHealth += healthToIncrease;
+            //     targetUnit.RestoreHealth(healthToIncrease);
+            // }
+            // else
+            //     GameService.Instance.UIService.ActionMissed();
         }
 
         public bool IsSuccessful() => true;

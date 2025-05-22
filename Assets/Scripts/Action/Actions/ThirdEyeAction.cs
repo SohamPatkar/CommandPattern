@@ -11,7 +11,7 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Self;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
@@ -21,14 +21,14 @@ namespace Command.Actions
 
         public void OnActionAnimationCompleted()
         {
-            if (IsSuccessful())
-            {
-                int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
-                targetUnit.TakeDamage(healthToConvert);
-                targetUnit.CurrentPower += healthToConvert;
-            }
-            else
-                GameService.Instance.UIService.ActionMissed();
+            // if (IsSuccessful())
+            // {
+            //     int healthToConvert = (int)(targetUnit.CurrentHealth * 0.25f);
+            //     targetUnit.TakeDamage(healthToConvert);
+            //     targetUnit.CurrentPower += healthToConvert;
+            // }
+            // else
+            //     GameService.Instance.UIService.ActionMissed();
         }
 
         public bool IsSuccessful() => true;

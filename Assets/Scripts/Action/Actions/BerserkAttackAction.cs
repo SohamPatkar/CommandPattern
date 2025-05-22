@@ -12,7 +12,7 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
@@ -24,13 +24,13 @@ namespace Command.Actions
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BERSERK_ATTACK);
 
-            if (IsSuccessful())
-                targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
-            else
-            {
-                actorUnit.TakeDamage(actorUnit.CurrentPower * 2);
-                Debug.Log("actor unit must be hit now.");
-            }
+            // if (IsSuccessful())
+            //     targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
+            // else
+            // {
+            //     actorUnit.TakeDamage(actorUnit.CurrentPower * 2);
+            //     Debug.Log("actor unit must be hit now.");
+            // }
         }
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
