@@ -12,28 +12,26 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Enemy;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
 
-            actorUnit.PlayBattleAnimation(ActionType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.BerserkAttack, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.BERSERK_ATTACK);
 
-            if (IsSuccessful())
-                targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
-            else
-            {
-                actorUnit.TakeDamage(actorUnit.CurrentPower * 2);
-                Debug.Log("actor unit must be hit now.");
-            }
+            // if (IsSuccessful())
+            //     targetUnit.TakeDamage(actorUnit.CurrentPower * 2);
+            // else
+            // {
+            //     actorUnit.TakeDamage(actorUnit.CurrentPower * 2);
+            //     Debug.Log("actor unit must be hit now.");
+            // }
         }
-
-        public bool IsSuccessful() => Random.Range(0f, 1f) < hitChance;
 
         public Vector3 CalculateMovePosition(UnitController targetUnit) => targetUnit.GetEnemyPosition();
     }

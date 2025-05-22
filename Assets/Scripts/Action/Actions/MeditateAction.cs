@@ -11,26 +11,26 @@ namespace Command.Actions
         private UnitController targetUnit;
         public TargetType TargetType => TargetType.Self;
 
-        public void PerformAction(UnitController actorUnit, UnitController targetUnit)
+        public void PerformAction(UnitController actorUnit, UnitController targetUnit, bool isSuccessful)
         {
             this.actorUnit = actorUnit;
             this.targetUnit = targetUnit;
 
-            actorUnit.PlayBattleAnimation(ActionType.Meditate, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
+            actorUnit.PlayBattleAnimation(CommandType.Meditate, CalculateMovePosition(targetUnit), OnActionAnimationCompleted);
         }
 
         public void OnActionAnimationCompleted()
         {
             GameService.Instance.SoundService.PlaySoundEffects(Sound.SoundType.MEDITATE);
 
-            if (IsSuccessful())
-            {
-                var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);
-                targetUnit.CurrentMaxHealth += healthToIncrease;
-                targetUnit.RestoreHealth(healthToIncrease);
-            }
-            else
-                GameService.Instance.UIService.ActionMissed();
+            // if (IsSuccessful())
+            // {
+            //     var healthToIncrease = (int)(targetUnit.CurrentMaxHealth * 0.2f);
+            //     targetUnit.CurrentMaxHealth += healthToIncrease;
+            //     targetUnit.RestoreHealth(healthToIncrease);
+            // }
+            // else
+            //     GameService.Instance.UIService.ActionMissed();
         }
 
         public bool IsSuccessful() => true;
