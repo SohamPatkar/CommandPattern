@@ -45,6 +45,7 @@ namespace Command.Main
         private void Start()
         {
             SoundService = new SoundService(soundScriptableObject, sfxSource, bgMusicSource);
+            CommandInvoker = new CommandInvoker();
             EventService = new EventService();
             ActionService = new ActionService();
             InputService = new InputService();
