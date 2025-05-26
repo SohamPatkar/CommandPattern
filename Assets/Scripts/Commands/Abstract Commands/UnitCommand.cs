@@ -13,6 +13,7 @@ namespace Command.Commands.AbstractCommands
         protected UnitController targetUnit;
 
         public abstract void Execute();
+        public abstract void Undo();
 
         public abstract bool WillHitTarget();
 
