@@ -77,6 +77,27 @@ namespace Command.Player
 
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
 
+        public void ResetCurrentActiveUnit()
+        {
+            units[activeUnitIndex].ResetUnitIndicator();
+
+            activeUnitIndex--;
+
+            while (activeUnitIndex >= 0)
+            {
+                if (!units[activeUnitIndex].IsAlive())
+                {
+                    activeUnitIndex--;
+                }
+                else
+                {
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
+        }
+
+
         public void ProcessUnitCommand(UnitCommand commandToProcess)
         {
             GetUnitByID(commandToProcess.CommandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
