@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Command.Commands.AbstractCommands;
 using UnityEngine;
 
 namespace Command.Player
@@ -23,7 +24,7 @@ namespace Command.Player
         {
             units = new List<UnitController>();
 
-            for(int i=0; i<unitScriptableObjects.Count; i++)
+            for (int i = 0; i < unitScriptableObjects.Count; i++)
             {
                 units.Add(new UnitController(this, unitScriptableObjects[i], unitPositions[i]));
             }
@@ -46,13 +47,13 @@ namespace Command.Player
 
         public void OnUnitTurnEnded()
         {
-            if(AllUnitsUsed())
+            if (AllUnitsUsed())
             {
                 // TODO:    Need to check here if any of the players are dead. Not only the active one.
 
                 if (AllUnitsDead())
                     playerService.PlayerDied(this);
-                else 
+                else
                     EndPlayerTurn();
             }
             else
@@ -75,6 +76,11 @@ namespace Command.Player
         private void EndPlayerTurn() => playerService.OnPlayerTurnCompleted();
 
         public UnitController GetUnitByID(int unitId) => units.Find(unit => unit.UnitID == unitId);
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess)
+        {
+            GetUnitByID(commandToProcess.CommandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+        }
 
         public void DestroyAllUnits()
         {

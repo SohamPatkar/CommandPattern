@@ -1,4 +1,5 @@
 using Command.Actions;
+using Command.Commands.AbstractCommands;
 using Command.Main;
 
 namespace Command.Player
@@ -23,7 +24,7 @@ namespace Command.Player
 
         private void CleanPlayers()
         {
-            if(player1 == null || player2 == null)
+            if (player1 == null || player2 == null)
                 return;
 
             player1.DestroyAllUnits();
@@ -45,13 +46,13 @@ namespace Command.Player
         private void StartNextTurn()
         {
             SetActivePlayer();
-            
+
             if (activePlayer == player1)
             {
                 currentTurnNumber++;
                 GameService.Instance.UIService.UpdateTurnNumber(currentTurnNumber);
             }
-            
+
             activePlayer.StartPlayerTurn();
         }
 
@@ -59,13 +60,13 @@ namespace Command.Player
         {
             if (activePlayer == null)
                 activePlayer = player1;
-            else 
+            else
                 activePlayer = activePlayer == player1 ? player2 : player1;
         }
 
         public void OnPlayerTurnCompleted() => StartNextTurn();
 
-        public void PerformAction(CommandType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit);
+        public void PerformAction(CommandType actionSelected, UnitController targetUnit) => GameService.Instance.ActionService.GetActionByType(actionSelected).PerformAction(activePlayer.GetUnitByID(ActiveUnitID), targetUnit, false);
 
         public void PlayerDied(PlayerController deadPlayer)
         {
@@ -79,7 +80,7 @@ namespace Command.Player
             GameService.Instance.UIService.ShowBattleEndUI(winnerId);
         }
 
-        private PlayerController GetPlayerById(int playerId) 
+        private PlayerController GetPlayerById(int playerId)
         {
             if (player1.PlayerID == playerId)
                 return player1;
@@ -95,6 +96,22 @@ namespace Command.Player
                 PlayerDied(player1);
             else if (player2.AllUnitsDead())
                 PlayerDied(player2);
+        }
+
+        public void ProcessUnitCommand(UnitCommand commandToProcess)
+        {
+            SetUnitReferences(commandToProcess);
+
+            GetPlayerById(commandToProcess.CommandData.ActorPlayerID).ProcessUnitCommand(commandToProcess);
+        }
+
+        private void SetUnitReferences(UnitCommand commandToProcess)
+        {
+            var actorUnit = GetPlayerById(commandToProcess.CommandData.ActorPlayerID).GetUnitByID(commandToProcess.CommandData.ActorUnitID);
+            var targetUnit = GetPlayerById(commandToProcess.CommandData.TargetPlayerID).GetUnitByID(commandToProcess.CommandData.TargetUnitID);
+
+            commandToProcess.SetActorUnitID(actorUnit);
+            commandToProcess.SetTargetUnit(targetUnit);
         }
     }
 }
