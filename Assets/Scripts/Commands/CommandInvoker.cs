@@ -16,6 +16,16 @@ namespace Command.Commands
             RegisterCommand(commandToProcess);
         }
 
+        public CommandInvoker() => SubscribeToEvents();
+
+        private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
+
+        private void SetReplayStack()
+        {
+            GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+            commandRegistry.Clear();
+        }
+
         private bool RegistryEmpty() => commandRegistry.Count == 0;
 
         private bool CommandBelongsToActivePlayer()
