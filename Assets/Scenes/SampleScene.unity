@@ -1640,11 +1640,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 281021676}
   - {fileID: 22985194}
   - {fileID: 101671527}
   - {fileID: 1222372627}
   - {fileID: 522226880}
+  - {fileID: 281021676}
   m_Father: {fileID: 1182275442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3037,6 +3037,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resultText: {fileID: 1682630446}
   homeButton: {fileID: 799045267}
+  replayButton: {fileID: 988327835}
 --- !u!1 &2089575972
 GameObject:
   m_ObjectHideFlags: 0
